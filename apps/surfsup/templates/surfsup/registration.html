@@ -1,0 +1,77 @@
+{% extends 'surfsup/base.html' %} {% load static %} {%block logincss %}
+<link rel="stylesheet" href="{% static 'surfsup/css/login.css' %}" />
+{%endblock %} {%block content %}
+
+<div class="wrapper fadeInDown" style="">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <i
+        class="fas fa-snowboarding my-3"
+        style="display:block; font-size:3em; color: skyblue"
+      ></i>
+      <h4><b>Register for quicker checkout!</b></h4>
+    </div>
+
+    <!-- Login Form -->
+    <form action="/register" method="POST">
+      {% csrf_token %}
+      <input
+        type="text"
+        class="fadeIn second"
+        placeholder="First Name"
+        name="first_name"
+        required
+        autofocus
+      />
+      <input
+        type="text"
+        class="fadeIn second"
+        placeholder="Last Name"
+        name="last_name"
+        required
+      />
+      <input
+        type="text"
+        class="fadeIn second"
+        placeholder="Phone number (optional)"
+        minlength="10"
+        maxlength="10"
+        name="phone"
+      />
+      <input
+        type="email"
+        id="login"
+        class="fadeIn second"
+        name="email"
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        id="password"
+        class="fadeIn third"
+        name="password"
+        placeholder="Password"
+      />
+      <input
+        type="password"
+        class="fadeIn second"
+        placeholder="Verify Password"
+        name="password_ver"
+        required
+      />
+      <input type="submit" class="fadeIn fourth" value="Register" />
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Already have an account?
+      <a class="underlineHover" href="/signin">sign in!</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

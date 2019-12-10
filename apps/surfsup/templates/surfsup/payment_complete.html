@@ -1,0 +1,214 @@
+{% extends 'surfsup/base.html' %} {% load static %} {% block stripe %}
+<link rel="stylesheet" href="{% static 'surfsup/css/stripe.css' %}" />
+{% endblock %} {%block content %}
+<!--Main layout-->
+<main class="mt-5 pt-4">
+  <div class="container wow fadeIn">
+    <!-- Heading -->
+    <h2 class="mt-4 mb-0 h2 text-center">Thank you for your payment</h2>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- Stepers Wrapper -->
+        <ul class="mb-0 stepper stepper-horizontal py-0">
+          <!-- First Step -->
+          <li class="completed">
+            <a class="pt-0 ">
+              <span class="circle aqua-gradient color-block">1</span>
+              <span class="label">alpha</span>
+            </a>
+          </li>
+
+          <!-- Second Step -->
+          <li class="completed">
+            <a class="pt-0">
+              <span class="circle peach-gradient color-block">2</span>
+              <span class="label">beta</span>
+            </a>
+          </li>
+
+          <!-- Third Step -->
+          <li class="completed">
+            <a class="pt-0">
+              <span class="circle purple-gradient color-block"
+                ><i class="fas fa-check"></i
+              ></span>
+              <span class="label">release</span>
+            </a>
+          </li>
+        </ul>
+        <!-- /.Stepers Wrapper -->
+      </div>
+    </div>
+    <!--Grid row-->
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-md-8 mb-4">
+        <!--Card-->
+
+        <div class="card">
+          <div class="card-header">
+            Invoice
+            <strong>{{ order.updated_at }}</strong>
+            <span class="float-right">
+              <strong>Status:</strong>
+              <span class="text-success">Complete</span></span
+            >
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-sm-6">
+                <h6 class="mb-2">From:</h6>
+                <div>
+                  <strong>Surf and Turf Co.</strong>
+                </div>
+                <div>42 Main St.</div>
+                <div>Suite 202</div>
+                <div>Email: surfturf@mail.com</div>
+                <div>Phone: +1 888 888 8888</div>
+              </div>
+
+              <div class="col-sm-6">
+                <h6 class="mb-2">To:</h6>
+                <div>
+                  <strong
+                    >{{ order.user.first_name }}
+                    {{ order.user.last_name }}</strong
+                  >
+                </div>
+                <div>{{ address.street }}</div>
+                <div>{{ address.street2 }}</div>
+                <div>{{ address.state }}, {{ address.zipcode }}</div>
+                <div>Email: {{ order.user.email }}</div>
+              </div>
+            </div>
+
+            <div class="table-responsive-sm">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th class="center">#</th>
+                    <th>Item</th>
+                    <th>Description</th>
+
+                    <th class="right">Price</th>
+                    <th class="center">Qty</th>
+                    <th class="right">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for orderitem in order.items.all %}
+                  <tr>
+                    <td class="center">{{ forloop.counter }}</td>
+                    <td class="left strong">{{ orderitem.item.name }}</td>
+                    <td class="left">{{ orderitem.item.description }}</td>
+
+                    <td class="right">
+                      {%if orderitem.item.discount_price %}
+                      <span class="text-danger">
+                        ${{ orderitem.item.discount_price }}
+                      </span>
+                      {%else%}
+                      {{ orderitem.item.price }}
+                      {% endif %}
+                    </td>
+                    <td class="center">{{ orderitem.quantity }}</td>
+                    <td class="right">{{ orderitem.get_item_total }}</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!--/.Card-->
+      </div>
+      <!--Grid column-->
+
+      <!--Grid column-->
+      <div class="col-md-4 mb-4">
+        <!-- Heading -->
+
+        <!-- Cart -->
+        <ul class="list-group mb-3 z-depth-1">
+          <li
+            class="py-2 list-group-item d-flex justify-content-between"
+            style="border: 0;"
+          >
+            <span>subtotal</span>
+            <strong>${{ order.order_subtotal }}</strong>
+          </li>
+          {% if order.total_saving %}
+          <li
+            class="py-2 list-group-item d-flex justify-content-between"
+            style="border: 0;"
+          >
+            <span>total savings</span>
+            <strong class="text-danger">- ${{ order.total_saving }}</strong>
+          </li>
+          {% endif %} {% if order.promo_valid %}
+          <li
+            class="py-2 list-group-item d-flex justify-content-between"
+            style="border: 0;"
+          >
+            <span>promo discount ({{ promo_percent }}%)</span>
+            <strong class="text-danger">-${{ promo_saving }}</strong>
+          </li>
+          {% endif %}
+          <li
+            class="py-2 list-group-item d-flex justify-content-between"
+            style="border: 0;"
+          >
+            <span>tax</span>
+            <strong>${{ order.get_tax }}</strong>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between py-2"
+            style="border: 0;"
+          >
+            <span>shipping</span>
+            <strong><del>$9.99</del> Free</strong>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between lh-condensed"
+          >
+            <div>
+              <h6 class="my-0"><strong>Final Total</strong></h6>
+            </div>
+            <span class="">
+              <strong>${{ final_total }}</strong>
+            </span>
+          </li>
+        </ul>
+        <ul class="list-group mb-3 z-depth-1">
+          <li
+            class="list-group-item d-flex justify-content-between lh-condensed"
+            style="border: 0;"
+          >
+            <div>
+              <h6 class="my-0"><strong>Shipping speed</strong></h6>
+            </div>
+            <span class="text-success">
+              <strong>(3-5 business days)</strong>
+            </span>
+          </li>
+          <li
+            class="list-group-item d-flex justify-content-between lh-condensed"
+          >
+            <div>
+              <h6 class="my-0"><strong>Arrival Date</strong></h6>
+            </div>
+            <span class="">
+              <strong>{{ delivery_date }}</strong>
+            </span>
+          </li>
+        </ul>
+        <!-- Cart -->
+      </div>
+      <!--Grid column-->
+    </div>
+    <!--Grid row-->
+  </div>
+</main>
+<!--Main layout-->
+{% endblock %}

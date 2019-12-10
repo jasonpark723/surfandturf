@@ -1,0 +1,52 @@
+{% extends 'surfsup/base.html' %} {% load static %} {%block content %}
+<!--Main layout-->
+<main class="mt-5 pt-4" style="height: 70vh;">
+  <div class="container">
+    <div class="row">
+      {% if not order_history %}
+      <h4 class="mt-5 pt-2">you have no order history...</h4>
+      {% else %}
+      <h4 class="mt-5 pt-2">
+        Here is your order history, {{ user.first_name }}!
+      </h4>
+      {%endif %}
+      <table class="cart table table-hover table-borderless text-center">
+        <thead class="border-bottom">
+          <tr>
+            <th scope="col">order id</th>
+            <th scope="col">order items</th>
+            <th scope="col">ordered date</th>
+            <th scope="col">shipping</th>
+            <th scope="col">action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for order in order_history %}
+          <tr>
+            <th scope="row" class="align-middle">#{{ order.id }}</th>
+            <td class="align-middle">
+              {% for item in order.items.all %}
+              {{ item.item.name }}, {% endfor %}
+            </td>
+            <td class="align-middle">
+              {{ order.updated_at }}
+            </td>
+            <td
+              class="align-middle {%if order.is_delivered %}text-success{%else%}text-danger{%endif%}"
+            >
+              {%if order.is_delivered %}delivered{%else%}shipped{%endif%}
+            </td>
+            <td class="align-middle">
+              <a href="/account/orders/{{ order.id }}" class="text-primary"
+                ><u>view details</u></a
+              >
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</main>
+<!--Main layout-->
+{% endblock %}

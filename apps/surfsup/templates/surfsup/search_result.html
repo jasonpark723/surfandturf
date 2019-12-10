@@ -1,0 +1,60 @@
+<div class="row wow fadeIn">
+  {% for product in products %}
+  <!--Grid column-->
+  <div class="col-lg-3 col-md-6 mb-4">
+    <!--Card-->
+    <div class="card">
+      <span
+        class="bestseller badge badge-pill warning-color mr-1 position-absolute"
+        >Bestseller</span
+      >
+      <!--Card image-->
+      <div class="view overlay">
+        <img
+          src="{{ product.product_image.url }}"
+          class="card-img-top"
+          alt="aadd"
+          height="150"
+        />
+        <a href="/products/show/{{ product.id }}">
+          <div class="mask rgba-white-slight"></div>
+        </a>
+      </div>
+      <!--Card image-->
+
+      <!--Card content-->
+      <div class="card-body text-center">
+        <!--Category & Title-->
+        <a href="/products/show/{{ product.id }}" class="grey-text">
+          <h6>{{product.categories.all.0}}</h6>
+        </a>
+        <h6>
+          <strong>
+            <a href="/products/show/{{ product.id }}" class="dark-grey-text"
+              >{{ product.name }}
+              {% if product.is_new %}
+              <span class="badge badge-pill danger-color">NEW</span>
+              {% endif %}
+            </a>
+          </strong>
+        </h6>
+        <a href="/products/show/{{ product.id }}">
+          <h5 class="font-weight-bold blue-text">
+            {% if product.discount_price %}
+            <del class="h6">${{ product.price }}</del
+            ><br />
+            <strong class="text-danger"> ${{ product.discount_price }}</strong>
+            {% else %}
+            <del class="h6"></del><br />
+            <strong>${{ product.price }}</strong>
+            {% endif %}
+          </h5>
+        </a>
+      </div>
+      <!--Card content-->
+    </div>
+    <!--Card-->
+  </div>
+  <!--Grid column-->
+  {% endfor %}
+</div>

@@ -1,0 +1,84 @@
+<!-- Navbar -->
+{% load static %}
+<nav
+  class="navbar navbar-fixed-top navbar-expand-lg navbar-light scrolling-navbar bg-transparent"
+  style="background-color: transparent;"
+>
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand waves-effect" href="/">
+      <img
+        src="{% static 'surfsup/images/logo5.png' %}"
+        alt="surfboard"
+        width="30"
+        height="30"
+        class="d-inline"
+      />
+    </a>
+
+    <!-- Collapse -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Left -->
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="/home"
+            >Home
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="/products">products </a>
+        </li>
+      </ul>
+
+      <!-- Right -->
+      <ul class="navbar-nav nav-flex-icons">
+        {% if current_order.items.all %}
+        <li class="nav-item">
+          <a class="nav-link waves-effect" href="/cart">
+            <span class="badge aqua-gradient color-block badge-pill">
+              {{ current_order.items.all | length }}</span
+            >
+            <i class="fas fa-shopping-cart"></i>
+            <span class="clearfix d-none d-sm-inline-block"> Cart </span>
+          </a>
+        </li>
+        {% endif %}
+
+        <li class="nav-item">
+          <a href="/account" class="nav-link waves-effect">
+            <i class="fas fa-user-circle"></i> Account
+          </a>
+        </li>
+
+        {% if not request.session.uid or user.user_level == 0 %}
+        <li class="nav-item">
+          <a href="/signin" class="nav-link waves-effect">
+            <i class="fas fa-sign-in-alt"></i> Sign in
+          </a>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a href="/signout" class="nav-link waves-effect">
+            <i class="fas fa-sign-out-alt"></i> Sign out
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- Navbar -->

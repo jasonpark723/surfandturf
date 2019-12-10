@@ -1,0 +1,12 @@
+.stripe-button-el {
+  width: 250px;
+  display: block;
+  margin: 53px auto;
+  margin-left: 100%;
+}
+
+input[type="image"] {
+  margin: 45px auto;
+  margin-left: 175%;
+  display: block;
+}
