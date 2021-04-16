@@ -11,7 +11,7 @@ Django==1.10
 django-allauth==0.39.1
 django-countries==5.3.3
 django-crispy-forms==1.7.2
-django-debug-toolbar==1.10.1
+django-debug-toolbar==1.11.1
 idna==2.8
 ipython==7.8.0
 ipython-genutils==0.2.0
